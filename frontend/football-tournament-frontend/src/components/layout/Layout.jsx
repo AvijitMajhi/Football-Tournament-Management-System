@@ -1,41 +1,23 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 function Layout() {
     return (
-        <div>
-            <nav
-                style={{
-                    background: "#222",
-                    color: "white",
-                    padding: "15px",
-                    display: "flex",
-                    gap: "20px",
-                }}
-            >
-                <Link to="/dashboard" style={{ color: "white" }}>
-                    Dashboard
-                </Link>
+        <div className="min-h-screen bg-gray-100">
 
-                <Link to="/tournaments" style={{ color: "white" }}>
-                    Tournaments
-                </Link>
+            <Navbar />
 
-                <Link to="/teams" style={{ color: "white" }}>
-                    Teams
-                </Link>
+            <div className="flex">
 
-                <Link to="/matches" style={{ color: "white" }}>
-                    Matches
-                </Link>
+                <Sidebar />
 
-                <Link to="/profile" style={{ color: "white" }}>
-                    Profile
-                </Link>
-            </nav>
+                <main className="flex-1 p-8">
+                    <Outlet />
+                </main>
 
-            <div style={{ padding: "20px" }}>
-                <Outlet />
             </div>
+
         </div>
     );
 }
