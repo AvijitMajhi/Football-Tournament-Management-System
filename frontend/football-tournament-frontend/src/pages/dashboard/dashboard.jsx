@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { getDashboard } from "../../services/dashboardService";
 
 function Dashboard() {
-
     const [stats, setStats] = useState(null);
 
     useEffect(() => {
-
         const fetchDashboard = async () => {
             try {
                 const data = await getDashboard();
@@ -17,30 +15,50 @@ function Dashboard() {
         };
 
         fetchDashboard();
-
     }, []);
 
     if (!stats) {
-        return <h2>Loading...</h2>;
+        return (
+            <h2 className="text-2xl font-semibold">
+                Loading...
+            </h2>
+        );
     }
+
+    const cards = [
+        { title: "Tournaments", value: stats.totalTournaments },
+        { title: "Teams", value: stats.totalTeams },
+        { title: "Matches", value: stats.totalMatches },
+        { title: "Completed", value: stats.completedMatches },
+        { title: "Upcoming", value: stats.upcomingMatches },
+    ];
 
     return (
         <div>
+            <h1 className="text-4xl font-bold mb-8">
+                Dashboard
+            </h1>
 
-            <h1>Dashboard</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
 
-            <h3>Total Tournaments: {stats.totalTournaments}</h3>
+                {cards.map((card) => (
+                    <div
+                        key={card.title}
+                        className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition"
+                    >
+                        <h2 className="text-gray-500">
+                            {card.title}
+                        </h2>
 
-            <h3>Total Teams: {stats.totalTeams}</h3>
+                        <p className="text-4xl font-bold mt-3 text-green-700">
+                            {card.value}
+                        </p>
+                    </div>
+                ))}
 
-            <h3>Total Matches: {stats.totalMatches}</h3>
-
-            <h3>Completed Matches: {stats.completedMatches}</h3>
-
-            <h3>Upcoming Matches: {stats.upcomingMatches}</h3>
-
+            </div>
         </div>
     );
 }
 
-export default Dashboard;
+export default Dashboard;  
