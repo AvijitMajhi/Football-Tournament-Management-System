@@ -17,6 +17,7 @@ function Dashboard() {
 
     const [stats, setStats] = useState(null);
     const navigate = useNavigate();
+    
     useEffect(() => {
 
         const fetchDashboard = async () => {
