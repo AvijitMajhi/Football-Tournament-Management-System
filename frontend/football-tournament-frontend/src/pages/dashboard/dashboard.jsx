@@ -10,7 +10,7 @@ import {
     FaCalendarAlt,
 } from "react-icons/fa";
 
-import DashboardCard from "../../pages/dashboard/DashboardCard";
+import DashboardCard from "./DashboardCard";
 import { getDashboard } from "../../services/dashboardService";
 
 function Dashboard() {
