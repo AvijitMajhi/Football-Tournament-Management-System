@@ -195,14 +195,14 @@ function TournamentDetails() {
                     >
                         Fixtures
                     </button>
-{totalMatches === 0 && (
+
     <button
         onClick={handleGenerateFixtures}
         className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-lg"
     >
         Generate Fixtures
     </button>
-)}
+
                     {tournament.tournamentType !== "Knockout" && (
 
                         <button
