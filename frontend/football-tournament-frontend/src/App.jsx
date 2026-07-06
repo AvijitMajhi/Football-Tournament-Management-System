@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
-import Dashboard from "./pages/dashboard/Dashboard";
+import Dashboard from "./pages/dashboard/Temp";
 import TournamentList from "./pages/tournament/TournamentList";
 import TeamList from "./pages/team/TeamList";
 import Standings from "./pages/tournament/Standing";
