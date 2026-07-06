@@ -60,7 +60,16 @@ const handleDelete = async () => {
 >
     View
 </button>
-
+{tournament.tournamentType !== "Knockout" && (
+    <button
+        onClick={() =>
+            navigate(`/tournaments/${tournament._id}/standings`)
+        }
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+    >
+        Standings
+    </button>
+)}
                     <button
                         onClick={() =>
                             navigate(`/tournaments/${tournament._id}/edit`)
@@ -76,6 +85,7 @@ const handleDelete = async () => {
 >
     Delete
 </button>
+
 
                 </div>
 
