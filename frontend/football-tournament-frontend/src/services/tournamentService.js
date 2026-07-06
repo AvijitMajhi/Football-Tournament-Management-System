@@ -38,3 +38,19 @@ export const deleteTournament = async (id) => {
     const response = await api.delete(`/tournaments/${id}`);
     return response.data;
 };
+export const getStandings = async (tournamentId) => {
+    const response = await api.get(
+        `/tournaments/${tournamentId}/standings`
+    );
+
+    return response.data.data;
+};
+export const getTournamentDashboard = async (id) => {
+
+    const response = await api.get(
+        `/tournaments/${id}/dashboard`
+    );
+
+    return response.data.data;
+
+};
