@@ -80,11 +80,13 @@ function TournamentDetails() {
 
             {/* Banner */}
             <div className="bg-white rounded-xl shadow overflow-hidden">
-                <img
-                    src={tournament?.banner}
-                    alt={tournament?.name}
-                    className="w-full h-72 object-cover"
-                />
+               <img
+    src={tournament?.banner}
+    onError={(e) => {
+        e.target.src = "/placeholder.jpg";
+    }}
+    className="w-full h-72 object-cover"
+/>
 
                 <div className="p-8">
                     <h1 className="text-4xl font-bold">
