@@ -1,98 +1,254 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getTournamentById } from "../../services/tournamentService";
+import { useParams, useNavigate } from "react-router-dom";
+import { getTournamentDashboard } from "../../services/tournamentService";
 
 function TournamentDetails() {
-    const { id } = useParams();
 
-    const [tournament, setTournament] = useState(null);
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        const fetchTournament = async () => {
+
+        const fetchDashboard = async () => {
+
             try {
-                const data = await getTournamentById(id);
-                setTournament(data);
+
+                const response = await getTournamentDashboard(id);
+
+                setData(response);
+
             } catch (error) {
+
                 console.error(error);
+
             }
+
         };
 
-        fetchTournament();
+        fetchDashboard();
+
     }, [id]);
 
-    if (!tournament) {
-        return <h2>Loading...</h2>;
+    if (!data) {
+
+        return (
+            <h2 className="text-2xl font-semibold">
+                Loading...
+            </h2>
+        );
+
     }
 
+    const {
+        tournament,
+        totalTeams,
+        totalMatches,
+        completedMatches,
+        upcomingMatches,
+        recentMatches,
+    } = data;
+
     return (
-        <div className="max-w-5xl mx-auto">
 
-            <img
-                src={tournament.banner}
-                alt={tournament.name}
-                className="w-full h-80 object-cover rounded-xl"
-            />
+        <div className="space-y-8">
 
-            <div className="bg-white shadow-lg rounded-xl p-8 mt-6">
+            {/* Banner */}
 
-                <h1 className="text-4xl font-bold">
-                    {tournament.name}
-                </h1>
+            <div className="bg-white rounded-xl shadow overflow-hidden">
 
-                <p className="text-gray-600 mt-4">
-                    {tournament.description}
-                </p>
+                <img
+                    src={tournament.banner}
+                    alt={tournament.name}
+                    className="w-full h-72 object-cover"
+                />
 
-                <div className="grid grid-cols-2 gap-6 mt-8">
+                <div className="p-8">
 
-                    <div>
-                        <strong>Location</strong>
-                        <p>{tournament.location}</p>
-                    </div>
+                    <h1 className="text-4xl font-bold">
+                        {tournament.name}
+                    </h1>
 
-                    <div>
-                        <strong>Tournament Type</strong>
-                        <p>{tournament.tournamentType}</p>
-                    </div>
+                    <p className="mt-3 text-gray-600">
+                        📍 {tournament.location}
+                    </p>
 
-                    <div>
-                        <strong>Maximum Teams</strong>
-                        <p>{tournament.maxTeams}</p>
-                    </div>
+                    <p className="text-gray-600">
+                        🏆 {tournament.tournamentType}
+                    </p>
 
-                    <div>
-                        <strong>Start Date</strong>
-                        <p>
-                            {new Date(
-                                tournament.startDate
-                            ).toLocaleDateString()}
-                        </p>
-                    </div>
+                    <p className="text-gray-600">
+                        📅 {new Date(tournament.startDate).toLocaleDateString()}
+                        {"  "}-
+                        {" "}
+                        {new Date(tournament.endDate).toLocaleDateString()}
+                    </p>
 
-                    <div>
-                        <strong>End Date</strong>
-                        <p>
-                            {new Date(
-                                tournament.endDate
-                            ).toLocaleDateString()}
-                        </p>
-                    </div>
+                    <p className="mt-3">
 
-                    <div>
-                        <strong>Registration Deadline</strong>
-                        <p>
-                            {new Date(
-                                tournament.registrationDeadline
-                            ).toLocaleDateString()}
-                        </p>
-                    </div>
+                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+
+                            {tournament.status}
+
+                        </span>
+
+                    </p>
 
                 </div>
 
             </div>
 
+            {/* Statistics */}
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+                <div className="bg-white rounded-xl shadow p-6 text-center">
+
+                    <h3 className="text-gray-500">Teams</h3>
+
+                    <p className="text-4xl font-bold text-green-700">
+
+                        {totalTeams}
+
+                    </p>
+
+                </div>
+
+                <div className="bg-white rounded-xl shadow p-6 text-center">
+
+                    <h3 className="text-gray-500">Matches</h3>
+
+                    <p className="text-4xl font-bold text-blue-600">
+
+                        {totalMatches}
+
+                    </p>
+
+                </div>
+
+                <div className="bg-white rounded-xl shadow p-6 text-center">
+
+                    <h3 className="text-gray-500">Completed</h3>
+
+                    <p className="text-4xl font-bold text-purple-600">
+
+                        {completedMatches}
+
+                    </p>
+
+                </div>
+
+                <div className="bg-white rounded-xl shadow p-6 text-center">
+
+                    <h3 className="text-gray-500">Remaining</h3>
+
+                    <p className="text-4xl font-bold text-red-600">
+
+                        {upcomingMatches}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            {/* Quick Actions */}
+
+            <div className="bg-white rounded-xl shadow p-6">
+
+                <h2 className="text-2xl font-bold mb-5">
+
+                    Quick Actions
+
+                </h2>
+
+                <div className="flex flex-wrap gap-4">
+
+                    <button
+                        onClick={() => navigate("/teams")}
+                        className="bg-green-600 text-white px-5 py-3 rounded-lg"
+                    >
+                        Teams
+                    </button>
+
+                    <button
+                        onClick={() => navigate("/matches")}
+                        className="bg-blue-600 text-white px-5 py-3 rounded-lg"
+                    >
+                        Fixtures
+                    </button>
+
+                    {tournament.tournamentType !== "Knockout" && (
+
+                        <button
+                            onClick={() =>
+                                navigate(`/tournaments/${tournament._id}/standings`)
+                            }
+                            className="bg-indigo-600 text-white px-5 py-3 rounded-lg"
+                        >
+                            Standings
+                        </button>
+
+                    )}
+
+                </div>
+
+            </div>
+
+            {/* Recent Matches */}
+
+            <div className="bg-white rounded-xl shadow p-6">
+
+                <h2 className="text-2xl font-bold mb-5">
+
+                    Recent Matches
+
+                </h2>
+
+                {recentMatches.length === 0 ? (
+
+                    <p>No matches yet.</p>
+
+                ) : (
+
+                    recentMatches.map((match) => (
+
+                        <div
+                            key={match._id}
+                            className="flex justify-between border-b py-3"
+                        >
+
+                            <span>
+
+                                {match.homeTeam?.name || "TBD"}
+
+                            </span>
+
+                            <span className="font-bold">
+
+                                {match.homeScore} - {match.awayScore}
+
+                            </span>
+
+                            <span>
+
+                                {match.awayTeam?.name || "TBD"}
+
+                            </span>
+
+                        </div>
+
+                    ))
+
+                )}
+
+            </div>
+
         </div>
+
     );
+
 }
 
 export default TournamentDetails;
