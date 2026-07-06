@@ -10,7 +10,9 @@ import MatchList from "./pages/match/MatchList";
 import Profile from "./pages/profile/Profile";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Layout from "./components/layout/Layout";
-
+import CreateTournament from "./pages/tournament/CreateTournament";
+import TournamentDetails from "./pages/tournament/TournamentDetails";
+import EditTournament from "./pages/tournament/EditTournament";
 function App() {
     return (
         <Routes>
@@ -27,6 +29,15 @@ function App() {
                 <Route path="/teams" element={<TeamList />} />
                 <Route path="/matches" element={<MatchList />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/tournaments/create" element={<CreateTournament />} />
+                <Route
+    path="/tournaments/:id"
+    element={<TournamentDetails />}
+/>
+<Route
+    path="/tournaments/:id/edit"
+    element={<EditTournament />}
+/>
             </Route>
         </Routes>
     );

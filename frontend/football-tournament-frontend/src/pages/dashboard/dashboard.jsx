@@ -1,10 +1,24 @@
-import { useEffect, useState } from "react";
+
+
+ import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    FaTrophy,
+    FaUsers,
+    FaFutbol,
+    FaCheckCircle,
+    FaCalendarAlt,
+} from "react-icons/fa";
+
+import DashboardCard from "../../pages/dashboard/DashboardCard";
 import { getDashboard } from "../../services/dashboardService";
 
 function Dashboard() {
-    const [stats, setStats] = useState(null);
 
+    const [stats, setStats] = useState(null);
+    const navigate = useNavigate();
     useEffect(() => {
+
         const fetchDashboard = async () => {
             try {
                 const data = await getDashboard();
@@ -15,6 +29,7 @@ function Dashboard() {
         };
 
         fetchDashboard();
+
     }, []);
 
     if (!stats) {
@@ -25,40 +40,87 @@ function Dashboard() {
         );
     }
 
-    const cards = [
-        { title: "Tournaments", value: stats.totalTournaments },
-        { title: "Teams", value: stats.totalTeams },
-        { title: "Matches", value: stats.totalMatches },
-        { title: "Completed", value: stats.completedMatches },
-        { title: "Upcoming", value: stats.upcomingMatches },
-    ];
-
     return (
         <div>
-            <h1 className="text-4xl font-bold mb-8">
+
+            <h1 className="text-3xl font-bold mb-8">
                 Dashboard
             </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
 
-                {cards.map((card) => (
-                    <div
-                        key={card.title}
-                        className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition"
-                    >
-                        <h2 className="text-gray-500">
-                            {card.title}
-                        </h2>
+                <DashboardCard
+                    title="Tournaments"
+                    value={stats.totalTournaments}
+                    icon={<FaTrophy />}
+                    color="#16a34a"
+                />
 
-                        <p className="text-4xl font-bold mt-3 text-green-700">
-                            {card.value}
-                        </p>
-                    </div>
-                ))}
+                <DashboardCard
+                    title="Teams"
+                    value={stats.totalTeams}
+                    icon={<FaUsers />}
+                    color="#2563eb"
+                />
+
+                <DashboardCard
+                    title="Matches"
+                    value={stats.totalMatches}
+                    icon={<FaFutbol />}
+                    color="#f97316"
+                />
+
+                <DashboardCard
+                    title="Completed"
+                    value={stats.completedMatches}
+                    icon={<FaCheckCircle />}
+                    color="#7c3aed"
+                />
+
+                <DashboardCard
+                    title="Upcoming"
+                    value={stats.upcomingMatches}
+                    icon={<FaCalendarAlt />}
+                    color="#dc2626"
+                />
 
             </div>
+
+<div className="mt-10">
+
+    <h2 className="text-2xl font-semibold mb-5">
+        Quick Actions
+    </h2>
+
+    <div className="flex flex-wrap gap-4">
+
+        <button
+    onClick={() => navigate("/tournaments/create")}
+    className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+>
+    Create Tournament
+</button>
+
+        <button
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+        >
+            Add Team
+        </button>
+
+        <button
+            className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition"
+        >
+            View Matches
+        </button>
+
+    </div>
+
+</div>
         </div>
     );
 }
 
-export default Dashboard;  
+
+
+
+export default Dashboard;
