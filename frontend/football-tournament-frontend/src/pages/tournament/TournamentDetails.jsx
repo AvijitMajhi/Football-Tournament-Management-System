@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTournamentDashboard } from "../../services/tournamentService";
-
+import { generateFixtures } from "../../services/matchService";
 function TournamentDetails() {
 
     const { id } = useParams();
@@ -50,6 +50,23 @@ function TournamentDetails() {
         recentMatches,
     } = data;
 
+    const handleGenerateFixtures = async () => {
+    try {
+        await generateFixtures(id);
+
+        alert("Fixtures generated successfully!");
+
+        navigate("/matches");
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            error.response?.data?.message ||
+            "Failed to generate fixtures"
+        );
+    }
+};
     return (
 
         <div className="space-y-8">
@@ -178,7 +195,14 @@ function TournamentDetails() {
                     >
                         Fixtures
                     </button>
-
+{totalMatches === 0 && (
+    <button
+        onClick={handleGenerateFixtures}
+        className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-lg"
+    >
+        Generate Fixtures
+    </button>
+)}
                     {tournament.tournamentType !== "Knockout" && (
 
                         <button
