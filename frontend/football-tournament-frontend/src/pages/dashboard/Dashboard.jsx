@@ -102,17 +102,19 @@ function Dashboard() {
     Create Tournament
 </button>
 
-        <button
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-        >
-            Add Team
-        </button>
+       <button
+    onClick={() => navigate("/teams/create")}
+    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+>
+    Add Team
+</button>
 
-        <button
-            className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition"
-        >
-            View Matches
-        </button>
+      <button
+    onClick={() => navigate("/matches")}
+    className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition"
+>
+    View Matches
+</button>
 
     </div>
 
