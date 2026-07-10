@@ -1,68 +1,124 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 function Navbar() {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem("accessToken");
         navigate("/login");
     };
 
+    const navItems = [
+        { name: "Dashboard", path: "/dashboard" },
+        { name: "Tournaments", path: "/tournaments" },
+        { name: "Teams", path: "/teams" },
+        { name: "Matches", path: "/matches" },
+        { name: "Profile", path: "/profile" },
+    ];
+
     return (
-        <nav className="bg-green-700 text-white shadow-md">
-            <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <nav className="bg-green-700 text-white shadow-md sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-                <h1 className="text-2xl font-bold">
-                    ⚽ Football Tournament Manager
-                </h1>
+                <div className="flex h-16 items-center justify-between">
 
-                <div className="flex items-center gap-6">
-
+                    {/* Logo */}
                     <Link
                         to="/dashboard"
-                        className="hover:text-yellow-300 transition"
+                        className="flex items-center gap-2"
                     >
-                        Dashboard
+                        <span className="text-3xl">⚽</span>
+
+                        <div className="hidden sm:block">
+                            <h1 className="text-xl font-bold">
+                                Football Tournament Manager
+                            </h1>
+                        </div>
+
+                        <div className="sm:hidden">
+                            <h1 className="text-lg font-bold">
+                                FTM
+                            </h1>
+                        </div>
                     </Link>
 
-                    <Link
-                        to="/tournaments"
-                        className="hover:text-yellow-300 transition"
-                    >
-                        Tournaments
-                    </Link>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-6">
 
-                    <Link
-                        to="/teams"
-                        className="hover:text-yellow-300 transition"
-                    >
-                        Teams
-                    </Link>
+                        {navItems.map((item) => (
+                            <NavLink
+                                key={item.name}
+                                to={item.path}
+                                className={({ isActive }) =>
+                                    `transition font-medium ${
+                                        isActive
+                                            ? "text-yellow-300"
+                                            : "hover:text-yellow-300"
+                                    }`
+                                }
+                            >
+                                {item.name}
+                            </NavLink>
+                        ))}
 
-                    <Link
-                        to="/matches"
-                        className="hover:text-yellow-300 transition"
-                    >
-                        Matches
-                    </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition"
+                        >
+                            Logout
+                        </button>
 
-                    <Link
-                        to="/profile"
-                        className="hover:text-yellow-300 transition"
-                    >
-                        Profile
-                    </Link>
+                    </div>
 
+                    {/* Mobile Menu Button */}
                     <button
-                        onClick={handleLogout}
-                        className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
+                        className="md:hidden"
+                        onClick={() => setIsOpen(!isOpen)}
                     >
-                        Logout
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
 
                 </div>
 
             </div>
+
+            {/* Mobile Menu */}
+            {isOpen && (
+                <div className="md:hidden bg-green-800 border-t border-green-600">
+
+                    <div className="flex flex-col">
+
+                        {navItems.map((item) => (
+                            <NavLink
+                                key={item.name}
+                                to={item.path}
+                                onClick={() => setIsOpen(false)}
+                                className={({ isActive }) =>
+                                    `px-5 py-3 ${
+                                        isActive
+                                            ? "bg-green-900 text-yellow-300"
+                                            : "hover:bg-green-900"
+                                    }`
+                                }
+                            >
+                                {item.name}
+                            </NavLink>
+                        ))}
+
+                        <button
+                            onClick={handleLogout}
+                            className="m-4 bg-red-500 py-2 rounded-lg hover:bg-red-600"
+                        >
+                            Logout
+                        </button>
+
+                    </div>
+
+                </div>
+            )}
         </nav>
     );
 }
