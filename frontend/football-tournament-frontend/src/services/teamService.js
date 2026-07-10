@@ -42,3 +42,12 @@ export const deleteTeam = async (id) => {
     const response = await api.delete(`/teams/${id}`);
     return response.data;
 };
+export const getTeamsByTournament = async (tournamentId) => {
+
+    const response = await api.get(
+        `/teams/tournament/${tournamentId}`
+    );
+
+    return response.data.data;
+
+};

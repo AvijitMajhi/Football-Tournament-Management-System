@@ -182,7 +182,14 @@ function TournamentDetails() {
                     >
                         {generating ? "Generating..." : "Generate Fixtures"}
                     </button>
-
+                    {tournament?.tournamentType === "Knockout" && (
+    <button
+        onClick={() => navigate(`/tournaments/${id}/create-match`)}
+        className="bg-red-600 text-white px-5 py-3 rounded-lg"
+    >
+        Create Match
+    </button>
+)}
                     {tournament?.tournamentType !== "Knockout" && (
                         <button
                             onClick={() =>

@@ -18,6 +18,7 @@ import MatchList from "./pages/match/MatchList";
 import UpdateMatchResult from "./pages/match/UpdateMatchResult";
 import EditProfile from "./pages/profile/EditProfile";
 import ChangePassword from "./pages/profile/ChangePassword";
+import CreateMatch from "./pages/match/CreateMatch";
 function App() {
     return (
         <Routes>
@@ -64,6 +65,10 @@ function App() {
 <Route
     path="/profile/change-password"
     element={<ChangePassword />}
+/>
+<Route
+    path="/tournaments/:tournamentId/create-match"
+    element={<CreateMatch />}
 />
 
             </Route>

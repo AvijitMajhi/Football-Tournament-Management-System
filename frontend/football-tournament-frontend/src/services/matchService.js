@@ -41,3 +41,9 @@ export const deleteMatch = async (id) => {
     const response = await api.delete(`/matches/${id}`);
     return response.data.data;
 };
+
+
+export const createMatch = async (matchData) => {
+    const response = await api.post("/matches", matchData);
+    return response.data.data;
+};
