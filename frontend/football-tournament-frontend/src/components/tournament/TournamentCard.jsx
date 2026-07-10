@@ -27,7 +27,7 @@ const handleDelete = async () => {
 };
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
-
+ 
             <img
                 src={tournament.banner}
                 alt={tournament.name}
