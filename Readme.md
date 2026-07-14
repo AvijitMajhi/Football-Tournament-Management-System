@@ -219,7 +219,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 **Avijit Majhi**
 
 - GitHub: https://github.com/AvijitMajhi
-- LinkedIn: *(Add your LinkedIn Profile Here)*
+- LinkedIn: https://www.linkedin.com/in/avijit-majhi-ab8103326/
 
 ---
 
