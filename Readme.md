@@ -124,16 +124,53 @@ screenshots/
 
 Example:
 
-```md
-## Login
+# 📸 Screenshots
+
+## 🔐 Login
 
 ![Login](screenshots/login.png)
 
-## Dashboard
+---
+
+## 📊 Dashboard
 
 ![Dashboard](screenshots/dashboard.png)
 
-```
+---
+
+## 👤 Register
+
+![Register](screenshots/register.png)
+
+---
+
+## 🏆 Tournaments
+
+![Tournaments](screenshots/tournaments.png)
+
+---
+
+## 🏟 Tournament Details
+
+![Tournament Details](screenshots/tournamentdetails.png)
+
+---
+
+## 👥 Teams
+
+![Teams](screenshots/teams.png)
+
+---
+
+## ⚽ Matches
+
+![Matches](screenshots/matches.png)
+
+---
+
+## 👤 Profile
+
+![Profile](screenshots/profile.png)
 
 ---
 
